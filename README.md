@@ -1,8 +1,57 @@
-# ciphertool.
-this is a encryption decryption tool.
-# How to use the tool??
-well using this tool is quite simple
-1.download either the c files or directly download the index.html
-2.the differece is of the ui part nothing else.
-3.the ui logic is of javascript which is the same as the C logic.
-4.after downloading the files u can directly get encrypted and decrypted text.
+# CIPHERTOOL
+
+A simple ASCII-based cipher tool for encrypting and decrypting text.
+
+## FEATURES
+
+* Caesar Cipher Implementation
+* ASCII Shift Encryption (Key: 9)
+* Command Line & Web Interface
+* Zero Dependencies
+
+## USAGE INSTRUCTIONS
+
+### DOWNLOAD OPTIONS
+
+Choose either:
+* C Files: encryption.c, decryption.c, combined.c, modcob.c
+* Web Version: index.html
+
+### IMPLEMENTATION DIFFERENCES
+
+* C Files: Terminal-based interface
+* HTML File: Browser-based interface
+
+NOTE: Both use identical encryption logic. The web version translates C logic to JavaScript.
+
+### EXECUTION
+
+**C Program:**
+```
+gcc combined.c -o cipher
+./cipher
+```
+
+**Web Version:**
+```
+Open index.html in any browser
+```
+
+### OPERATION
+
+1. Select mode: Encrypt or Decrypt
+2. Enter your text
+3. Receive processed output
+
+## TECHNICAL DETAILS
+
+* Algorithm: Caesar Cipher
+* Key Value: 9
+* Method: ASCII character shift
+* Encryption: char + 9
+* Decryption: char - 9
+
+## AUTHOR
+
+Om Mahendra Bute(ozz)
+tip: Keep ur key safe. :)
