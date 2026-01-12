@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>encryption tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #2a2a2a;
+            border: 1px solid #404040;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #e0e0e0;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            font-weight: normal;
+        }
+
+        .info {
+            background: #333;
+            border: 1px solid #404040;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        .mode-selector {
+            margin-bottom: 20px;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            border: 1px solid #404040;
+            background: #333;
+            color: #e0e0e0;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            margin-right: 10px;
+        }
+
+        .mode-btn:hover {
+            background: #404040;
+        }
+
+        .mode-btn.active {
+            background: #505050;
+            border-color: #666;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #e0e0e0;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #404040;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            font-size: 1em;
+            font-family: 'Courier New', monospace;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 12px;
+            background: #404040;
+            color: #e0e0e0;
+            border: 1px solid #666;
+            font-size: 1em;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 20px;
+        }
+
+        .action-btn:hover {
+            background: #505050;
+        }
+
+        .output-section {
+            background: #1a1a1a;
+            border: 1px solid #404040;
+            padding: 15px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .output-section.show {
+            display: block;
+        }
+
+        .output-section h3 {
+            color: #e0e0e0;
+            margin-bottom: 10px;
+            font-size: 1em;
+            font-weight: normal;
+        }
+
+        .output-text {
+            background: #2a2a2a;
+            padding: 10px;
+            word-wrap: break-word;
+            font-family: 'Courier New', monospace;
+            color: #e0e0e0;
+            border: 1px solid #404040;
+            margin-bottom: 10px;
+        }
+
+        .copy-btn {
+            padding: 8px 15px;
+            background: #333;
+            color: #e0e0e0;
+            border: 1px solid #404040;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-family: 'Courier New', monospace;
+        }
+
+        .copy-btn:hover {
+            background: #404040;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>cipher tool</h1>
+
+        <div class="info">
+            9 is the key. chill.
+        </div>
+
+        <div class="mode-selector">
+            <button class="mode-btn active" id="encryptMode" onclick="setMode('encrypt')">
+                encrypt
+            </button>
+            <button class="mode-btn" id="decryptMode" onclick="setMode('decrypt')">
+                decrypt
+            </button>
+        </div>
+
+        <div class="input-group">
+            <label for="inputText" id="inputLabel">enter text:</label>
+            <textarea id="inputText" placeholder="Type here..."></textarea>
+        </div>
+
+        <button class="action-btn" id="processBtn" onclick="processText()">
+            process
+        </button>
+
+        <div class="output-section" id="outputSection">
+            <h3 id="outputLabel">output:</h3>
+            <div class="output-text" id="outputText"></div>
+            <button class="copy-btn" onclick="copyToClipboard()">Copy</button>
+        </div>
+
+        <div class="footer">
+            <p>ozzz :)
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'encrypt';
+
+        function setMode(mode) {
+            currentMode = mode;
+            const encryptBtn = document.getElementById('encryptMode');
+            const decryptBtn = document.getElementById('decryptMode');
+            const outputSection = document.getElementById('outputSection');
+
+            if (mode === 'encrypt') {
+                encryptBtn.classList.add('active');
+                decryptBtn.classList.remove('active');
+            } else {
+                decryptBtn.classList.add('active');
+                encryptBtn.classList.remove('active');
+            }
+
+            outputSection.classList.remove('show');
+            document.getElementById('inputText').value = '';
+        }
+
+        //  ASCII shift +9 
+        function encrypt(text) {
+            let result = '';
+            for (let i = 0; i < text.length; i++) {
+                result += String.fromCharCode(text.charCodeAt(i) + 9);
+            }
+            return result;
+        }
+
+        //  ASCII shift -9 
+        function decrypt(text) {
+            let result = '';
+            for (let i = 0; i < text.length; i++) {
+                result += String.fromCharCode(text.charCodeAt(i) - 9);
+            }
+            return result;
+        }
+
+        function processText() {
+            const inputText = document.getElementById('inputText').value;
+            
+            if (!inputText.trim()) {
+                alert('Enter some text');
+                return;
+            }
+
+            let result;
+            if (currentMode === 'encrypt') {
+                result = encrypt(inputText);
+            } else {
+                result = decrypt(inputText);
+            }
+
+            document.getElementById('outputText').textContent = result;
+            document.getElementById('outputSection').classList.add('show');
+        }
+
+        function copyToClipboard() {
+            const outputText = document.getElementById('outputText').textContent;
+            navigator.clipboard.writeText(outputText);
+        }
+    </script>
+</body>
+</html>
